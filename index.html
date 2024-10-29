@@ -17,6 +17,145 @@
     
 </head>
 <body>
+    <header class="border-b border-gray-300 flex items-center justify-between px-7 py-4 ">
+        <div class="flex items-center gap-3 ">
+            <i class="fa-solid fa-layer-group "></i>
+            <span >mini-jira</span>
+        </div>
+        <nav class="flex gap-9">
+            <div class="menu-item-active relative">Project</div>
+            <div class="menu-item relative">filters</div>
+            <div class="menu-item relative">Tableau de bord</div>
+            <div class="menu-item relative">Plus</div>
+        </nav>
+        <div class="bg-red-500 rounded-full py-1 px-3 text-white font-semibold">
+            <h2>A</h2>
+        </div>
+    </header>
+    <main >
+        <aside isopened="true" id="slider" class="relative border-r-2 border-gray-300 transition-all" style="width: 300px;">
+            <div id="slidericon" onclick="SlideBarEventClick()" class="absolute -right-5 top-6 cursor-pointer p-2 h-10 w-10 border-2 border-gray-400 rounded-full bg-white">
+                <img class="h-auto" src="./Assets/icons8-arrow.png" alt="" />
+            </div>
+            <div id="asidecontent" class="">
+                <div isopened="false" class="flex gap-5 justify-center mt-4">
+                    <img class="h-auto w-12	" src="./Assets/project-management.png" alt="" />
+                    <div class="">
+                        <h4 class="font-bold">Bref 4</h4>
+                        <p class="font-normal text-sm">Project youcode</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-5 mt-10">
+                    <div isopened="true" onclick="MenuTabClick()" id="tabheader"  class="flex items-center ml-4 gap-3 cursor-pointer">
+                        <i id="tabheadericon" class="fa-solid fa-chevron-right text-xs transition-all" style="transform: rotate(90deg);"></i>
+                        <h3 >Planification</h3>
+                    </div>
+                    
+                    <div id="tabcontent" class="flex flex-col gap-3 transition-all">
+                        <div class="mx-10 py-1 px-2 border-2 rounded-lg cursor-pointer">Taches</div>
+                        <div class="mx-10 py-1 px-2 border-2 rounded-lg cursor-pointer">Tableau</div>
+                    </div>
+                </div>
+            </div>
+            
+        </aside>
+        <div class="maintachepanel">
+            <div class="flex justify-between items-center "> 
+                <div class="">
+                    <span>Projects / Bref 4</span>
+                    <h2 class="font-bold text-2xl"> Gestion de taches</h2>
+                </div>
+                <div class="bg-blue-600 text-white px-5 py-1 cursor-pointer rounded-md">
+                    <span>Créer</span>
+                </div>
+            </div>
+            <div class="bg-gray-100 rounded-lg">
+                <div class="flex flex-row justify-between px-5 py-2">
+                    <h4>Tableau de taches</h4>
+                    <h4>Count(3)</h4>
+                </div>
+                <div class="bg-white h-auto mt-2 mr-2 ml-2 ">
+                    <div class="tacherow grid px-4 py-2 border-l-2 border-r-2 border-b-2 border-gray-300 items-center gap-5" style="grid-template-columns: 1fr auto auto ;">
+                        <div class="flex items-center gap-3">
+                            <h3>Tache name 3 bla bla bla </h3>
+                            <div id="edit">
+                                <i class="fa-solid fa-pen text-gray-400 text-sm"></i>
+                            </div>
+                        </div>
 
+                        <div class="relative">
+                            <div onclick="OpenEtatCombo(1)" class="flex gap-3 items-center px-2 rounded-sm cursor-pointer">
+                                <h3>A faire</h3>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                            <div id="combo-content1" class="z-10 hidden absolute w-full bg-white border-2 rounded-md  h-auto">
+                                <ul class="flex flex-col justify-center cursor-pointer">
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">A faire</li>
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">En cours</li>
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">Terminer</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+
+                    <div class="tacherow grid px-4 py-2 border-l-2 border-r-2 border-b-2 border-gray-300 items-center gap-5" style="grid-template-columns: 1fr auto auto ;">
+                        <div class="flex items-center gap-3">
+                            <h3>Tache name 3 bla bla bla </h3>
+                            <div id="edit">
+                                <i class="fa-solid fa-pen text-gray-400 text-sm"></i>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div onclick="OpenEtatCombo(2)" class="flex gap-3 items-center px-2 rounded-sm cursor-pointer">
+                                <h3>A faire</h3>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                            <div id="combo-content2" class="z-10 hidden absolute w-full bg-white border-2 rounded-md  h-auto">
+                                <ul class="flex flex-col justify-center cursor-pointer">
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">A faire</li>
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">En cours</li>
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">Terminer</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+
+                    <div class="tacherow grid px-4 py-2 border-l-2 border-r-2 border-b-2 border-gray-300 items-center gap-5" style="grid-template-columns: 1fr auto auto ;">
+                        <div class="flex items-center gap-3">
+                            <h3>Tache name 3 bla bla bla </h3>
+                            <div id="edit">
+                                <i class="fa-solid fa-pen text-gray-400 text-sm"></i>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div onclick="OpenEtatCombo(3)" class="flex gap-3 items-center px-2 rounded-sm cursor-pointer">
+                                <h3>A faire</h3>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                            <div id="combo-content3" class="z-10 hidden absolute w-full bg-white border-2 rounded-md  h-auto">
+                                <ul class="flex flex-col justify-center cursor-pointer">
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">A faire</li>
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">En cours</li>
+                                    <li class="cursor-pointer px-2 hover:bg-gray-300">Terminer</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+
+                    
+                </div>
+                
+            </div>
+        </div>
+    </main>
+    <script src="./Js/main.js"></script>
 </body>
 </html>
