@@ -1,3 +1,10 @@
+const tachegrid = document.querySelector('#tachegrid');
+const allBtnIcons = tachegrid.querySelectorAll('div');
+const tacherow = document.getElementById('tacherow');
+const edit = document.getElementById('edit');
+let counter = 0 ;
+let Totaltaches = 0 ;
+
 const SlideBarEventClick = ()=>{
     const slider = document.getElementById('slider');
     const slidericon = document.getElementById('slidericon');
@@ -36,16 +43,16 @@ const MenuTabClick = ()=>{
         tabcontent.style.scale = '1' ;
     }
 }
-const OpenEtatCombo = (num) => {
-    const ComboContent = document.getElementById('combo-content'+num);
 
-    if(ComboContent.getAttribute('isopened') == 'true'){
-        ComboContent.classList.add('hidden');
-        ComboContent.setAttribute('isopened','false');
-    }
-    else {
-        ComboContent.classList.remove('hidden');
-        ComboContent.setAttribute('isopened','true');
-    }
-        
-}
+
+// allBtnIcons.forEach((divedit , index) => {
+//     if (divedit.id === 'edit') {
+//         divedit.addEventListener('click' , ()=>{
+//             alert(`click on ${counter}`)
+//         })
+//         divedit.classList.toggle('active');
+//         counter++;
+//     }
+// });
+
+

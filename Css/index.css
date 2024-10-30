@@ -49,10 +49,10 @@ main{
     padding-block: 1.3rem;
     padding-inline: 2rem;
   }
-#edit{
-    display: none;
+.editicon{
+    display: block;
 }
-.tacherow:hover + #edit{
+.tacherow:hover + .editicon{
     display: block;
 }
 .tacherow:hover{
