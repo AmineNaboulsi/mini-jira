@@ -50,15 +50,14 @@ main{
 .maintachepanel{
   display: grid;
   grid-template-rows: auto 1fr;
-  overflow-y: auto;
   gap: 1rem;
   padding-block: 1.3rem;
   padding-inline: 2rem;
 }
 .editicon{
-  display: block;
+  display: none;
 }
-.tacherow:hover + .editicon{
+.tacherow:hover .editicon{
   display: block;
 }
 .tacherow:hover{

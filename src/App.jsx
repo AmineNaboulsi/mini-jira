@@ -8,72 +8,93 @@ import { FaPen } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { IoAdd } from "react-icons/io5";
 import { MdDone } from "react-icons/md";
+import { IoMdShare } from "react-icons/io";
+import { IoTimeSharp } from "react-icons/io5";
+import { FaTimes } from "react-icons/fa";
 
 
 import './index.css'
 function App() {
+    const [TotalItems , setTotalItems] = useState(10);
     const [tachelist , settachelist] = useState([
         {
             Id : 1 ,
             Name : 'tache 1 ' ,
             NameEdit : '' ,
-            Desc : 'bla bla bla bla',
-            date_limit : new Date() ,
+            Desc : 'bla bla bla bla 1',
+            date_limit : new Date("2024-10-31") ,
             etat : 1,
             isOpenedMenu : false ,
-            EditMode : false 
+            EditMode : false ,
+            alertdate : false 
         },
         {
             Id : 2 ,
             Name : 'tache 2 ' ,
             NameEdit : '' ,
-            Desc : 'bla bla bla bla',
-            date_limit : new Date() ,
+            Desc : 'bla bla bla 2',
+            date_limit : new Date("2024-10-30") ,
             etat : 2,
             isOpenedMenu : false ,
-            EditMode : false
+            EditMode : false,
+            alertdate : false 
         },   {
             Id : 3 ,
             Name : 'tache 3 ' ,
             NameEdit : '' ,
-            Desc : 'bla bla bla bla',
-            date_limit : new Date() ,
+            Desc : 'bla bla bla bla bla 3',
+            date_limit : new Date("2024-11-01") ,
             etat : 1,
             isOpenedMenu : false ,
-            EditMode : false 
+            EditMode : false ,
+            alertdate : false 
         },
         {
             Id : 4 ,
             Name : 'tache 4 ' ,
             NameEdit : '' ,
             Desc : 'bla bla bla bla',
-            date_limit : new Date() ,
+            date_limit : new Date("2024-11-01") ,
             etat : 2,
             isOpenedMenu : false ,
-            EditMode : false
+            EditMode : false,
+            alertdate : false 
         },
         {
             Id : 5 ,
             Name : 'tache 5 ' ,
             NameEdit : '' ,
             Desc : 'bla bla bla bla',
-            date_limit : new Date() ,
+            date_limit : new Date("2024-11-01") ,
             etat : 1,
             isOpenedMenu : false ,
-            EditMode : false 
+            EditMode : false ,
+            alertdate : false 
         },
         {
             Id : 6 ,
             Name : 'tache 6 ' ,
             NameEdit : '' ,
             Desc : 'bla bla bla bla',
-            date_limit : new Date() ,
+            date_limit : new Date("2022-11-01") ,
             etat : 2,
             isOpenedMenu : false ,
-            EditMode : false
+            EditMode : false,
+            alertdate : false 
         }
     ]);
-    const [slider , setslider] = useState(false)
+    const [SelectedTask , setSelectedTask] = useState( {
+        Id : 0 ,
+        Name : '' ,
+        Desc : '',
+        date_limit : new Date() ,
+        etat : 1,
+        isOpenedMenu : false ,
+        EditMode : false 
+    });
+    const [slider , setslider] = useState(true);
+    const [EditMode , setEditMode] = useState(false);
+
     const Editcontent = (id) =>{
         settachelist((prevList) =>
             prevList.map((item) =>
@@ -141,6 +162,33 @@ function App() {
             tachelist.filter(item => item.Id !== id )
         )
     }
+    const AddTask = ()=>{
+        tachelist.push({
+            Id : TotalItems ,
+            Name : 'nouvelle tache' ,
+            NameEdit : '' ,
+            Desc : '',
+            date_limit : new Date() ,
+            etat : 1,
+            isOpenedMenu : false ,
+            EditMode : false 
+        })
+        setTotalItems(TotalItems +1);
+    }
+    const HandledEditBtn = ()=>{
+        setEditMode(false);
+        const id = SelectedTask.Id?SelectedTask.Id:-1;
+        settachelist(p=>
+            p.map(item=> item.Id === id ? {
+                ...item ,
+                Name : SelectedTask && SelectedTask.Name , 
+                Desc : SelectedTask && SelectedTask.Desc ,
+                date_limit : new Date(SelectedTask.date_limit)
+            } : item 
+        )
+        )
+        console.log(tachelist)
+    }
   return (
     <div className='body'>
       <header className="border-b border-gray-300 flex items-center justify-between px-7 py-4 ">
@@ -160,10 +208,9 @@ function App() {
         </div>
     </header>
     <main >
-        <aside id="slider" className="relative border-r-2 border-gray-300 transition-all" style={{width : slider?'300px':'50px'}} /*style="width: 300px;"*/>
+        <aside id="slider" className="relative border-r-2 border-gray-300 transition-all" style={{width : slider?'300px':'25px'}} /*style="width: 300px;"*/>
             <div id="slidericon" onClick={SlideBarEventClick} className="absolute flex justify-center items-center -right-5 top-6 cursor-pointer  h-10 w-10 border-2 border-gray-400 rounded-full bg-white">
                 <IoIosArrowBack size={20} className={slider?'transition-all rotate-0':'transition-all rotate-180'}/>
-
             </div>
             {slider ? 
             <div id="asidecontent" >
@@ -176,7 +223,7 @@ function App() {
             </div>
             <div className="flex flex-col gap-5 mt-10">
                 <div onClick="MenuTabClick()" id="tabheader"  className="flex items-center ml-4 gap-3 cursor-pointer">
-                    {/* <i id="tabheadericon" className="fa-solid fa-chevron-right text-xs transition-all" style="transform: rotate(90deg);"></i> */}
+                    <IoIosArrowDown />
                     <h3 >Planification</h3>
                 </div>
                 
@@ -196,24 +243,58 @@ function App() {
                     <span>Projects / Bref 4</span>
                     <h2 className="font-bold text-2xl"> Gestion de taches</h2>
                 </div>
-                <div className="bg-blue-600 text-white px-5 py-1 cursor-pointer rounded-md">
-                    <span>Créer</span>
+                <div className="bg-blue-600 text-white px-3 py-1 cursor-pointer rounded-md flex items-center gap-1">
+                    <IoMdShare  />
+                    <span>Partager</span>
                 </div>
             </div>
-            <div className="bg-gray-100 rounded-lg">
-                <div className="flex flex-row justify-between px-5 py-2">
-                    <h4>Tableau de taches</h4>
-                    <h4 id="tachestotal"></h4>
-                </div>
-                <div id="tachegrid" className="bg-white h-auto mt-2 mr-2 ml-2 ">  
+            <div className={EditMode?'grid transition-all grid-cols-[70%,30%]':'grid transition-all grid-cols-[100%,0%]'}>
+                <div >
+                    {tachelist && tachelist.map(item=>(
+                        (item.date_limit < new Date() && !item.alertdate ) ? 
+                            <div className="mb-2 text-gray-700 bg-red-100 p-2 flex justify-between rounded-md">
+                                <div className="flex gap-1 items-center">
+                                    <IoTimeSharp className='text-red-600' />
+                                    <h2>Le délai du tache {item.Name} a finie </h2>
+                                </div>
+                                <FaTimes onClick={()=>{
+                                    settachelist(p=>
+                                        p.map(pre=> pre.Id === item.Id ? {
+                                            ...pre ,
+                                            alertdate : true
+                                        } : pre 
+                                    )
+                                    )
+                                }} className='cursor-pointer' size={10} />
+                            </div>
+                            : null
+                        
+                    ))}
+                    
+
+                <div className="bg-gray-100 rounded-lg grid grid-rows-[auto,1fr,auto]">
+
+                    <div className="flex flex-row justify-between px-5 py-2">
+                        <h4>Tableau de taches</h4>
+                        <h4 id="tachestotal"></h4>
+                    </div>
+                 <div id="tachegrid" className="bg-white h-auto mt-2 mr-2 ml-2 border-t-2 border-gray-300 overflow-y-auto">  
                     {tachelist && tachelist.map((item , i)=>(
-                     
-                         <div key={item.id} id="tacherow" className="tacherow grid px-4 py-2 border-l-2 border-r-2 border-b-2 border-gray-300 items-center gap-5" style={{gridTemplateColumns : "1fr auto auto "}}>
+                    
+                        <div key={item.id} id="tacherow" className="tacherow grid px-4 py-2 border-l-2 border-r-2 border-b-2 border-gray-300 items-center gap-5" style={{gridTemplateColumns : "1fr auto auto "}}>
                             <div className="relative flex items-center gap-3">
-                                <h3>{item.Name}</h3>
+                                <h3 onClick={()=>{
+                                    setEditMode(true);
+                                    setSelectedTask(p=>({
+                                        ...p ,
+                                        Id : item.Id ,
+                                        Name :item.Name ,
+                                        Desc : item.Desc ,
+                                        date_limit : new Date(item.date_limit)
+                                    }));
+                                }} className='capitalize cursor-pointer hover:underline'>{item.Name}</h3>
                                 <div id="edit" onClick={()=> Editcontent(item.Id)} class="editicon cursor-pointer">
                                     <FaPen className='text-gray-400 text-sm'  />
-
                                 </div>
                                 {item.EditMode ? 
                                 
@@ -237,7 +318,7 @@ function App() {
                                 }
                                 
                             </div>
-    
+
                             <div className="relative">
                                 <div onClick={()=> OpenEtatCombo(item.Id)} class="flex gap-3 items-center px-2 rounded-sm cursor-pointer">
                                     <h3 className={item.etat==1?`A faire`:item.etat==2?`text-blue-500`:`text-green-500`} >{item.etat==1?`A faire`:item.etat==2?`En cours`:`Terminer`}</h3>
@@ -257,13 +338,81 @@ function App() {
                                 </> : <></>}
                                 
                             </div>
-    
-                            <FaRegTrashCan onClick={()=>DeleteTask(item.Id)} className='text-red-500 cursor-pointer' />
-                        </div>
-                    ))}                  
+
+                <FaRegTrashCan onClick={()=>DeleteTask(item.Id)} className='text-red-500 cursor-pointer' />
+            </div>
+        ))}                  
+    </div>
+
+<div onClick={()=>AddTask()} className="flex flex-row items-center gap-1 mx-2 px-1 py-1 mt-2 mb-2 font-semibold rounded-md hover:bg-gray-200 cursor-pointer">
+    <IoAdd />
+    <h4 id="tachestotal">Créer une tache</h4>
+</div>
+</div>  
                 </div>
+               
+                {EditMode && 
+                <div className="pl-3 pt-3 flex flex-col gap-3">
+                    <div className="flex justify-between items-center">
+                        <h2>Edit mode</h2>
+                        <IoAdd onClick={()=>{
+                            setEditMode(false);
+                        }} className='rotate-45 cursor-pointer' size={25}/>
+                    </div>
+                    <div className="grid gap-2 mt-5">
+                        <h2>Name</h2>
+                        <input 
+                        className='p-2 border-2 rounded-[4px] w-full'
+                        type='text'
+                        value={SelectedTask.Name}
+                        onChange={(e)=>
+                            setSelectedTask(prev=>({
+                                ...prev,
+                                Name : e.target.value
+                            }))
+                        }/>
+                    </div>
+                    <div className="grid gap-2">
+                        <h2>Description</h2>
+                        <input 
+                        className='p-2 border-2  rounded-[4px] w-full ' 
+                        type='text'
+                        value={SelectedTask.Desc}
+                        onChange={(e)=>
+                        {
+                            setSelectedTask(prev=>({
+                                ...prev,
+                                Desc : e.target.value
+                            }));
+                            console.log(SelectedTask)
+                        }
+                        }/>
+                    </div>
+                    <div className="grid gap-2">
+                        <h2>Date limit</h2>
+                        <input 
+                        className='p-2 border-2 rounded-[4px] w-full'
+                        type='date'
+                        value={SelectedTask.date_limit.toISOString().split('T')[0]}
+                        onChange={(e)=>
+                            setSelectedTask(prev=>({
+                                ...prev,
+                                date_limit : new Date(e.target.value)
+                            }))
+                        } />
+                    </div>
+                    <div className="flex justify-end gap-2 mt-3">
+                        <button onClick={()=>HandledEditBtn()} className='p-2 text-[0.9rem] bg-blue-500 text-white font-medium rounded-md hover:bg-blue-600 border-2 border-solid'>Enregistrer</button>
+                        <button onClick={()=>{
+                            setEditMode(false);
+                          
+                        }} className='p-2 text-[0.9rem] text-gray-600 font-medium rounded-md hover:bg-gray-100'>Annuler</button>
+                    </div>
+                </div>
+                }
                 
             </div>
+            
         </div>
     </main>
     </div>
