@@ -16,6 +16,7 @@ function App() {
         {
             Id : 1 ,
             Name : 'tache 1 ' ,
+            NameEdit : '' ,
             Desc : 'bla bla bla bla',
             date_limit : new Date() ,
             etat : 1,
@@ -25,6 +26,46 @@ function App() {
         {
             Id : 2 ,
             Name : 'tache 2 ' ,
+            NameEdit : '' ,
+            Desc : 'bla bla bla bla',
+            date_limit : new Date() ,
+            etat : 2,
+            isOpenedMenu : false ,
+            EditMode : false
+        },   {
+            Id : 3 ,
+            Name : 'tache 3 ' ,
+            NameEdit : '' ,
+            Desc : 'bla bla bla bla',
+            date_limit : new Date() ,
+            etat : 1,
+            isOpenedMenu : false ,
+            EditMode : false 
+        },
+        {
+            Id : 4 ,
+            Name : 'tache 4 ' ,
+            NameEdit : '' ,
+            Desc : 'bla bla bla bla',
+            date_limit : new Date() ,
+            etat : 2,
+            isOpenedMenu : false ,
+            EditMode : false
+        },
+        {
+            Id : 5 ,
+            Name : 'tache 5 ' ,
+            NameEdit : '' ,
+            Desc : 'bla bla bla bla',
+            date_limit : new Date() ,
+            etat : 1,
+            isOpenedMenu : false ,
+            EditMode : false 
+        },
+        {
+            Id : 6 ,
+            Name : 'tache 6 ' ,
+            NameEdit : '' ,
             Desc : 'bla bla bla bla',
             date_limit : new Date() ,
             etat : 2,
@@ -32,7 +73,7 @@ function App() {
             EditMode : false
         }
     ]);
-    const [slider , setslider] = useState(true)
+    const [slider , setslider] = useState(false)
     const Editcontent = (id) =>{
         settachelist((prevList) =>
             prevList.map((item) =>
@@ -56,7 +97,24 @@ function App() {
         );
     }
     const ValideEditcontent = (id) =>{
-        
+        settachelist(prev=>(
+            prev.map((item)=> item.Id === id ?
+                {...item , 
+                    Name : item.NameEdit ,
+                    EditMode : false
+                }
+            : item)
+        ))  
+    } 
+    const HandleEditNameChanged = (e , id) =>{
+        const newname = e.target.value;
+        settachelist((prev) => 
+            prev.map((item)=> item.Id === id ? {
+                ...item ,
+                NameEdit : newname
+            }:item )
+        )
+        console.log(tachelist)
     } 
     const SlideBarEventClick = () => setslider(!slider)
    
@@ -65,12 +123,23 @@ function App() {
             prevList.map((item) =>
                 item.Id === id
                     ? { ...item, isOpenedMenu: !item.isOpenedMenu }
-                    : item
+                    : {...item , isOpenedMenu: false } 
             )
         );
     };
     const ChangeEtat = (id , i) =>{
-        
+        settachelist((prevList) =>
+            prevList.map((item) =>
+                item.Id === id
+                    ? { ...item, etat: i,isOpenedMenu : false}
+                    : item 
+            )
+        );
+    }
+    const DeleteTask = (id)=>{
+        settachelist(
+            tachelist.filter(item => item.Id !== id )
+        )
     }
   return (
     <div className='body'>
@@ -80,7 +149,7 @@ function App() {
         <img className='h-7' src={MiniJiraIcon} />
             <span >mini-jira</span>
         </div>
-        <nav className="flex gap-9">
+        <nav className="menunav flex gap-9">
             <div className="menu-item-active relative">Project</div>
             <div className="menu-item relative">filters</div>
             <div className="menu-item relative">Tableau de bord</div>
@@ -149,9 +218,13 @@ function App() {
                                 {item.EditMode ? 
                                 
                                     <div className="flex items-center gap-1 absolute -top-1 h-auto w-auto">
-                                                <input id="txtEdit${item.Id}" className="border-2 border-blue-400" type="text" />
+                                                <input 
+                                                    id="txtEdit${item.Id}" 
+                                                    onChange={(e)=>HandleEditNameChanged(e , item.Id)}
+                                                    value={tachelist[i].NameEdit}
+                                                    className="border-2 border-blue-400" type="text" />
                                                 <div className="flex ">
-                                                <MdDone onClick={ValideEditcontent(item.Id)} className='bg-white border-2 p-1 border-gray-200 h-6 w-6 rounded-md cursor-pointer' />
+                                                <MdDone onClick={()=>ValideEditcontent(item.Id)} className='bg-white border-2 p-1 border-gray-200 h-6 w-6 rounded-md cursor-pointer' />
                                                 <div onClick={()=>CloseEditcontent(item.Id)}  className='flex justify-center items-center bg-white border-2 p-1 border-gray-200 h-6 w-6 rounded-md cursor-pointer' >
                                                     <IoAdd className='rotate-45'/>
                                                 </div>
@@ -175,9 +248,9 @@ function App() {
                                 {item && item.isOpenedMenu ? <>
                                         <div className="z-10 absolute w-full bg-white border-2 rounded-md  h-auto">
                                         <ul className="flex flex-col justify-center cursor-pointer">
-                                            <li onClick={ChangeEtat(item.Id , 1)} className="cursor-pointer px-2 hover:bg-gray-300">A faire</li>
-                                            <li onClick={ChangeEtat(item.Id , 2)} className="cursor-pointer px-2 hover:bg-gray-300 text-blue-500">En cours</li>
-                                            <li onClick={ChangeEtat(item.Id , 3)} className="cursor-pointer px-2 hover:bg-gray-300 text-green-500">Terminer</li>
+                                            <li onClick={()=>ChangeEtat(item.Id , 1)} className="cursor-pointer px-2 hover:bg-gray-300">A faire</li>
+                                            <li onClick={()=>ChangeEtat(item.Id , 2)} className="cursor-pointer px-2 hover:bg-gray-300 text-blue-500">En cours</li>
+                                            <li onClick={()=>ChangeEtat(item.Id , 3)} className="cursor-pointer px-2 hover:bg-gray-300 text-green-500">Terminer</li>
                                         </ul>
                                     </div>
 
@@ -185,7 +258,7 @@ function App() {
                                 
                             </div>
     
-                            <FaRegTrashCan className='text-red-500' />
+                            <FaRegTrashCan onClick={()=>DeleteTask(item.Id)} className='text-red-500 cursor-pointer' />
                         </div>
                     ))}                  
                 </div>
