@@ -16,8 +16,10 @@ import { FaTimes } from "react-icons/fa";
 import './index.css'
 function App() {
     const [TotalItems , setTotalItems] = useState(1);
-    const [tachelist , settachelist] = useState([
-    ]);
+    const [tachelist, settachelist] = useState(() => {
+        const storedTasks = localStorage.getItem('tasks');
+        return storedTasks ? JSON.parse(storedTasks) : [];
+    });
 
     useEffect(() => {
         const storedTasks = localStorage.getItem('tasks');
@@ -25,6 +27,11 @@ function App() {
             settachelist(JSON.parse(storedTasks));
         }
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tachelist));
+    }, [tachelist] );
+
 
     const [SelectedTask , setSelectedTask] = useState( {
         Id : 0 ,
@@ -35,7 +42,10 @@ function App() {
         isOpenedMenu : false ,
         EditMode : false 
     });
-    const [slider , setslider] = useState(true);
+    const [slider , setslider] = useState(()=>{
+        const pslider =  localStorage.getItem('pslider');
+        return pslider==0?true :false ;
+    });
     const [EditMode , setEditMode] = useState(false);
 
     const Editcontent = (id) =>{
@@ -80,7 +90,11 @@ function App() {
         )
         console.log(tachelist)
     } 
-    const SlideBarEventClick = () => setslider(!slider)
+    const SlideBarEventClick = () => {
+        setslider(!slider);
+        localStorage.setItem('pslider',slider?1:0);
+
+    }
    
     const OpenEtatCombo = (id) => {
         settachelist((prevList) =>
@@ -104,6 +118,7 @@ function App() {
         settachelist(
             tachelist.filter(item => item.Id !== id )
         )
+        localStorage.setItem('tasks', JSON.stringify(tachelist));
     }
     const AddTask = ()=>{
         tachelist.push({
@@ -131,6 +146,8 @@ function App() {
             } : item 
         )
         )
+        localStorage.setItem('tasks', JSON.stringify(tachelist));
+
     }
   return (
     <div className='body'>
@@ -296,7 +313,7 @@ function App() {
                 </div>
                
                 {EditMode && 
-                <div className="editmode">
+                <div  className="editmode">
                     <div className="editmodepanel pl-3 pt-3 flex flex-col gap-3">
                         <div className="flex justify-between items-center">
                             <h2>Edit mode</h2>

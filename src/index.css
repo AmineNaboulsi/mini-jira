@@ -68,6 +68,9 @@ main{
 }
 
 @media screen and (max-width : 650px) {
+  .maintachepanel{
+    padding-left: 3.2rem;
+  }
   .menunav{
     display: none;
   }
@@ -96,14 +99,25 @@ main{
     inset: 0;
     background-color: rgba(201, 201, 201, 0.507);
     z-index: 2;
+
   }
   .editmodepanel{
     background-color: white;
     padding: 1rem;
     border-radius: 0.3rem;
     width: 80%;
+    animation: popupaniamtionedit 0.4s ease forwards;
+
   }
-  .maintachepanel{
-    padding-left:3rem;
+ 
+}
+@keyframes popupaniamtionedit{
+  0%{
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0px);
   }
 }
