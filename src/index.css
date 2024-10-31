@@ -67,8 +67,43 @@ main{
   background-color: rgb(115, 247, 115);
 }
 
-@media screen and (max-width : 550px) {
+@media screen and (max-width : 650px) {
   .menunav{
     display: none;
+  }
+  main{
+    position: relative;
+    grid-template-columns: 1fr;
+
+  }
+  #slider{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: white;
+  }
+  .panellisttask{
+    grid-template-columns: 1fr;
+  }
+  .editmode{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+    background-color: rgba(201, 201, 201, 0.507);
+    z-index: 2;
+  }
+  .editmodepanel{
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    width: 80%;
+  }
+  .maintachepanel{
+    padding-left:3rem;
   }
 }
