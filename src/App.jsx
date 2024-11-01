@@ -29,6 +29,10 @@ function App() {
     }, []);
 
     useEffect(() => {
+        // settachelist((prevList) =>
+        //     prevList.map((item) => ({...item, isOpenedMenu: false })
+        //     )
+        // );
         localStorage.setItem('tasks', JSON.stringify(tachelist));
     }, [tachelist] );
 

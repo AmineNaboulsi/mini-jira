@@ -109,7 +109,9 @@ main{
     animation: popupaniamtionedit 0.4s ease forwards;
 
   }
- 
+  .tacherow:hover .editicon{
+    display: none;
+  }
 }
 @keyframes popupaniamtionedit{
   0%{
