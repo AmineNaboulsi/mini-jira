@@ -15,7 +15,10 @@ import { FaTimes } from "react-icons/fa";
 
 import './index.css'
 function App() {
-    const [TotalItems , setTotalItems] = useState(1);
+    const [TotalItems , setTotalItems] = useState(()=>{
+        const lastid = localStorage.getItem('lastid');
+        return lastid ? lastid : 1 ;
+    });
     const [tachelist, settachelist] = useState(() => {
         const storedTasks = localStorage.getItem('tasks');
         return storedTasks ? JSON.parse(storedTasks) : [];
@@ -29,11 +32,8 @@ function App() {
     }, []);
 
     useEffect(() => {
-        // settachelist((prevList) =>
-        //     prevList.map((item) => ({...item, isOpenedMenu: false })
-        //     )
-        // );
         localStorage.setItem('tasks', JSON.stringify(tachelist));
+        localStorage.setItem('lastid' ,lastid );
     }, [tachelist] );
 
 
