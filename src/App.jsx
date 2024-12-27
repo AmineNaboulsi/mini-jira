@@ -161,12 +161,7 @@ function App() {
         <img className='h-7' src={MiniJiraIcon} />
             <span >mini-jira</span>
         </div>
-        <nav className="menunav flex gap-9">
-            <div className="menu-item-active relative">Project</div>
-            <div className="menu-item relative">filters</div>
-            <div className="menu-item relative">Tableau de bord</div>
-            <div className="menu-item relative">Plus</div>
-        </nav>
+            Made with ❤️ by Amine
         <div className="bg-red-500 rounded-full py-1 px-3 text-white font-semibold">
             <h2>A</h2>
         </div>
