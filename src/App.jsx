@@ -33,7 +33,7 @@ function App() {
 
     useEffect(() => {
         localStorage.setItem('tasks', JSON.stringify(tachelist));
-        localStorage.setItem('lastid' ,lastid );
+        // localStorage.setItem('lastid' ,lastid);
     }, [tachelist] );
 
 
@@ -214,9 +214,9 @@ function App() {
             </div>
             <div className={EditMode?'panellisttask grid transition-all grid-cols-[70%,30%]':'grid transition-all grid-cols-[100%,0%]'}>
                 <div >
-                    {tachelist && tachelist.map(item=>(
+                    {tachelist && tachelist.map((item, i)=>(
                         (item.date_limit > new Date().setDate(new Date().getDate()+1) && !item.alertdate ) ? 
-                            <div className="mb-2 text-gray-700 bg-red-100 p-2 flex justify-between rounded-md">
+                            <div key={i} className="mb-2 text-gray-700 bg-red-100 p-2 flex justify-between rounded-md">
                                 <div className="flex gap-1 items-center">
                                     <IoTimeSharp className='text-red-600' />
                                     <h2>Le délai du tache {item.Name} a finie </h2>
@@ -258,7 +258,7 @@ function App() {
                                         date_limit : new Date(item.date_limit)
                                     }));
                                 }} className='capitalize cursor-pointer hover:underline'>{item.Name}</h3>
-                                <div id="edit" onClick={()=> Editcontent(item.Id)} class="editicon cursor-pointer">
+                                <div id="edit" onClick={()=> Editcontent(item.Id)} className="editicon cursor-pointer">
                                     <FaPen className='text-gray-400 text-sm'  />
                                 </div>
                                 {item.EditMode ? 
@@ -285,7 +285,7 @@ function App() {
                             </div>
 
                             <div className="relative">
-                                <div onClick={()=> OpenEtatCombo(item.Id)} class="flex gap-3 items-center px-2 rounded-sm cursor-pointer">
+                                <div onClick={()=> OpenEtatCombo(item.Id)} className="flex gap-3 items-center px-2 rounded-sm cursor-pointer">
                                     <h3 className={item.etat==1?`A faire`:item.etat==2?`text-blue-500`:`text-green-500`} >{item.etat==1?`A faire`:item.etat==2?`En cours`:`Terminer`}</h3>
                                     <i ></i>
                                     <IoIosArrowDown className="text-xs" />
